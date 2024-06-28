@@ -4,6 +4,7 @@ const AddVolume = ({ handleDeposit, handleVolume, newVolume }) => {
       <label htmlFor="volumeInput">Volume:</label>
       <input
         type="number"
+        id="volumeInput"
         name="volumeInput"
         min="0"
         max="100"
