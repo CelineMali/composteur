@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+//components
+import AddVolume from "./components/AddVolume";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const deposits = [{ id: 1, date: "2024-06-28", persons: 8, volume: 100 }];
+  //states
+  const [newVolume, setVolume] = useState(0);
+  const [totalDeposit, setTotalDeposit] = useState({ persons: 0, volume: 0 });
+  //handlers
+  const handleVolume = (event) => {
+    setVolume(Number(event.target.value));
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+  const handleDeposit = () => {
+    const newDeposit = { ...totalDeposit };
+    if (newVolume !== 0) {
+      newDeposit.persons += 1;
+      newDeposit.volume += newVolume;
+    }
 
+    setTotalDeposit(newDeposit);
+    setVolume(0);
+  };
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <form onSubmit={handleSubmit}>
+        <AddVolume
+          newVolume={newVolume}
+          handleVolume={handleVolume}
+          handleDeposit={handleDeposit}
+        />
+      </form>
+      <p>Déposants: {totalDeposit.persons}</p>
+      <p>Volume: {totalDeposit.volume}</p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
