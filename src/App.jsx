@@ -1,19 +1,27 @@
 import { useState } from "react";
 //components
 import AddVolume from "./components/AddVolume";
+//services
+import permanenceService from "./services/permanenceService";
 
 function App() {
-  const deposits = [{ id: 1, date: "2024-06-28", persons: 8, volume: 100 }];
   //states
   const [newVolume, setVolume] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState({ persons: 0, volume: 0 });
   const [newPermanence, setNewPermanence] = useState(Date.now());
+  const [isSubmitDisabled, setSubmitDisabled] = useState(true);
   //handlers
   const handleVolume = (event) => {
     setVolume(Number(event.target.value));
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    const newPerm = { ...totalDeposit, date: newPermanence };
+    return permanenceService.createPerm(newPerm).then((response) => {
+      console.log("new perm created", response);
+      alert("new permanence created");
+      return true;
+    });
   };
   const handleDeposit = () => {
     const newDeposit = { ...totalDeposit };
@@ -24,10 +32,13 @@ function App() {
 
     setTotalDeposit(newDeposit);
     setVolume(0);
+
+    setSubmitDisabled(false);
   };
   const handlePermanence = (event) => {
     setNewPermanence(event.target.value);
   };
+
   //App
   return (
     <>
@@ -45,6 +56,9 @@ function App() {
           handleVolume={handleVolume}
           handleDeposit={handleDeposit}
         />
+        <button type="submit" disabled={isSubmitDisabled ? true : false}>
+          Fin de la permanence
+        </button>
       </form>
       <p>Déposants: {totalDeposit.persons}</p>
       <p>Volume: {totalDeposit.volume}</p>

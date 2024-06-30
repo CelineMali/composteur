@@ -1,0 +1,23 @@
+{
+  "permanences": [
+    {},
+    {
+      "id": "0a22",
+      "persons": 2,
+      "volume": 7,
+      "date": "2024-07-01"
+    },
+    {
+      "id": "56e9",
+      "persons": 0,
+      "volume": 0,
+      "date": "2024-06-30"
+    },
+    {
+      "id": "0721",
+      "persons": 1,
+      "volume": 2,
+      "date": "2024-06-30"
+    }
+  ]
+}
